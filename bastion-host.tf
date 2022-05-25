@@ -28,39 +28,39 @@ resource "aws_instance" "provisioner" {
   }
 }
 
-resource "null_resource" "provisioner" {
-  # Changes to any instance of the cluster requires re-provisioning
-  triggers = {
-    instance_id = aws_instance.provisioner.id
-    script      = filemd5("${path.module}/files/kubectl-eksctl.sh")
-  }
+# resource "null_resource" "provisioner" {
+#   # Changes to any instance of the cluster requires re-provisioning
+#   triggers = {
+#     instance_id = aws_instance.provisioner.id
+#     script      = filemd5("${path.module}/files/kubectl-eksctl.sh")
+#   }
 
-  # Bootstrap script can run on any instance of the cluster
-  # So we just choose the first in this case
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("${path.module}/files/.pem/id_rsa")
-    host        = aws_instance.provisioner.public_ip
-  }
+#   # Bootstrap script can run on any instance of the cluster
+#   # So we just choose the first in this case
+#   connection {
+#     type        = "ssh"
+#     user        = "ubuntu"
+#     private_key = file("${path.module}/files/.pem/id_rsa")
+#     host        = aws_instance.provisioner.public_ip
+#   }
 
-  provisioner "file" {
-    source      = "${path.module}/files/.aws"
-    destination = "/tmp"
-  }
+#   provisioner "file" {
+#     source      = "${path.module}/files/.aws"
+#     destination = "/tmp"
+#   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo mv /tmp/.aws ~/",
-    ]
-  }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo mv /tmp/.aws ~/",
+#     ]
+#   }
 
-  provisioner "remote-exec" {
-    script = "${path.module}/files/kubectl-eksctl.sh"
-  }
+#   provisioner "remote-exec" {
+#     script = "${path.module}/files/kubectl-eksctl.sh"
+#   }
 
-  depends_on = [
-    aws_eks_addon.ebs_cni,
-    aws_eks_addon.coredns
-  ]
-}
+#   depends_on = [
+#     aws_eks_addon.ebs_cni,
+#     aws_eks_addon.coredns
+#   ]
+# }
