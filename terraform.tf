@@ -2,15 +2,15 @@
 # # Backend terraform Cloud
 # ################################################################################
 
-# terraform {
-#   backend "remote" {
-#     organization = "langhae"
+terraform {
+  backend "remote" {
+    organization = "langhae"
 
-#     workspaces {
-#       name = "eks-cluster"
-#     }
-#   }
-# }
+    workspaces {
+      name = "eks-cluster"
+    }
+  }
+}
 
 ################################################################################
 # Local Variables
