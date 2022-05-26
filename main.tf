@@ -64,13 +64,13 @@ resource "aws_eks_addon" "coredns" {
   depends_on        = [aws_eks_node_group.node]
 }
 
-resource "aws_eks_addon" "ebs_cni" {
-  cluster_name             = aws_eks_cluster.this.name
-  addon_name               = "aws-ebs-csi-driver"
-  resolve_conflicts        = "OVERWRITE"
-  service_account_role_arn = aws_iam_role.ebs_csi.arn
-  depends_on               = [aws_eks_node_group.node]
-}
+# resource "aws_eks_addon" "ebs_cni" {
+#   cluster_name             = aws_eks_cluster.this.name
+#   addon_name               = "aws-ebs-csi-driver"
+#   resolve_conflicts        = "OVERWRITE"
+#   service_account_role_arn = aws_iam_role.ebs_csi.arn
+#   depends_on               = [aws_eks_node_group.node]
+# }
 
 # resource "aws_cloudwatch_log_group" "eks" {
 #   name              = "/aws/eks/${local.name}/cluster"

@@ -59,3 +59,7 @@ output "aws_efs_csi_iam_role" {
 output "aws_prometheus_iam_role" {
   value = aws_iam_role.cwagent_prometheus
 }
+
+output "aws_ami_latest_version" {
+  value = data.aws_ami.eks_default
+}
