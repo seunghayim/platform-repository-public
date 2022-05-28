@@ -21,7 +21,7 @@ resource "aws_eks_cluster" "this" {
   vpc_config {
     subnet_ids              = concat(module.vpc.private_subnets, module.vpc.public_subnets)
     endpoint_private_access = true
-    endpoint_public_access  = false
+    endpoint_public_access  = true
     security_group_ids      = [aws_security_group.eks-cotrol-plane.id]
     # public_access_cidrs     = [cidrsubnet(aws_instance.provisioner.public_ip, 16)]
   }
@@ -48,6 +48,7 @@ resource "aws_eks_addon" "vpc-cni" {
   cluster_name             = aws_eks_cluster.this.name
   addon_name               = "vpc-cni"
   resolve_conflicts        = "OVERWRITE"
+  addon_version            = "v1.11.0-eksbuild.1"
   service_account_role_arn = aws_iam_role.cni.arn
 }
 

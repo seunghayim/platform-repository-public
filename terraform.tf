@@ -7,7 +7,7 @@ terraform {
     organization = "langhae"
 
     workspaces {
-      name = "eks-cluster"
+      name = "eks-cluster-all"
     }
   }
 }
